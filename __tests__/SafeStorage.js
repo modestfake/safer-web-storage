@@ -1,4 +1,5 @@
 import storageMock from './helpers/__mocks__/storage'
+import { createSafeLocalStorage, createSafeSessionStorage } from '../src'
 import SafeStorage from '../src/SafeStorage'
 
 const previousWindow = global.window
@@ -31,7 +32,7 @@ describe('SafeStorage', () => {
 
   test('Use native localStorage', () => {
     window.localStorage = storageMock
-    const safeLocalStorage = new SafeStorage('localStorage')
+    const safeLocalStorage = createSafeLocalStorage()
 
     expect(SafeStorage.isNativeStorageSupported('localStorage')).toBe(true)
     expect(safeLocalStorage.isNativeStorageUsed).toBe(true)
@@ -41,7 +42,7 @@ describe('SafeStorage', () => {
 
   test('Use native sessionStorage', () => {
     window.sessionStorage = storageMock
-    const safeSessionStorage = new SafeStorage('sessionStorage')
+    const safeSessionStorage = createSafeSessionStorage()
 
     expect(SafeStorage.isNativeStorageSupported('sessionStorage')).toBe(true)
     expect(safeSessionStorage.isNativeStorageUsed).toBe(true)
@@ -50,7 +51,7 @@ describe('SafeStorage', () => {
 
   test('Pass custom error message', () => {
     const errorMessage = 'Custom error message'
-    const safeLocalStorage = new SafeStorage('localStorage', { errorMessage })
+    const safeLocalStorage = createSafeLocalStorage({ errorMessage })
 
     expect(safeLocalStorage._options.errorMessage).toBe(errorMessage)
   })
@@ -75,16 +76,16 @@ describe('SafeStorage', () => {
       },
     })
 
-    const safeSessionStorage = new SafeStorage('sessionStorage')
-
-    expect(safeSessionStorage.isInMemoryStorageUsed).toBe(true)
-    expect(safeSessionStorage.isNativeStorageUsed).toBe(false)
-    expect(SafeStorage.isNativeStorageSupported('sessionStorage')).toBe(false)
-
-    const safeLocalStorage = new SafeStorage('localStorage')
+    const safeLocalStorage = createSafeLocalStorage()
 
     expect(safeLocalStorage.isInMemoryStorageUsed).toBe(false)
     expect(safeLocalStorage.isNativeStorageUsed).toBe(false)
     expect(SafeStorage.isNativeStorageSupported('localStorage')).toBe(false)
+
+    const safeSessionStorage = createSafeSessionStorage()
+
+    expect(safeSessionStorage.isInMemoryStorageUsed).toBe(true)
+    expect(safeSessionStorage.isNativeStorageUsed).toBe(false)
+    expect(SafeStorage.isNativeStorageSupported('sessionStorage')).toBe(false)
   })
 })
