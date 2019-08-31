@@ -29,6 +29,7 @@ describe('inMemoryStorage', () => {
     inMemoryStorage.setItem('key-2', 'value-2')
 
     inMemoryStorage.removeItem('key-1')
+    inMemoryStorage.removeItem('wrong-key')
 
     expect(inMemoryStorage.getItem('key-1')).toBeNull()
     expect(inMemoryStorage.getItem('key-2')).toBe(

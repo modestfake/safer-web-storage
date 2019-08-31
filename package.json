@@ -1,7 +1,7 @@
 {
   "name": "safer-web-storage",
   "version": "0.0.1",
-  "description": "",
+  "description": "Safer web storage",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/modestfake/safer-web-storage#readme",
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
-    "eslint": "^6.2.1",
+    "eslint": "^6.3.0",
     "jest": "^24.9.0",
     "prettier": "^1.18.2"
   }

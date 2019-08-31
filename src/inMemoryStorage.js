@@ -22,7 +22,7 @@ class InMemoryStorage {
       delete this._data[key]
     }
 
-    this.length = this.length = Object.keys(this._data).length
+    this.length = Object.keys(this._data).length
 
     return null
   }
