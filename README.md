@@ -40,3 +40,12 @@ You can pass the following properties to `options`:
 | Name           | Type   | Default                                                                      | Description                                                                |
 | -------------- | ------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | `errorMessage` | String | Looks like you've disabled \<StorageType\>. Enable it to avoid this warning. | Error message printed to the browser console when storage is not available |
+
+## Development
+
+To test the library in a browser run:
+
+```bash
+npm install
+npm start
+```

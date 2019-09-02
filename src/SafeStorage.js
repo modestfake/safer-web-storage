@@ -24,6 +24,8 @@ export default class SafeStorage {
   constructor(storageType, options) {
     validateStorageType(storageType)
 
+    this._storageType = storageType
+
     this._options = {
       errorMessage: getErrorMessage(storageType),
       ...options,
@@ -44,7 +46,6 @@ export default class SafeStorage {
     }
 
     this._storage = window[storageType]
-    this._storageType = storageType
     this._isNativeStorageUsed = true
     this._isInMemoryStorageUsed = false
   }
