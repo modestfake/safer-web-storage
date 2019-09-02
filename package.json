@@ -1,18 +1,23 @@
 {
   "name": "safer-web-storage",
   "version": "0.0.1",
-  "description": "Safer web storage",
+  "description": "Handle all exception when storage is not available due to user's browser settings. Swap to in-memory storage if sessionStorage is not available.",
+  "keywords": [
+    "localStorage",
+    "sessionStorage",
+    "in-memory storage"
+  ],
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint .",
     "test": "jest"
   },
+  "author": "Vitalii Saienko <modestfake@gmail.com> (https://github.com/modestfake)",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/modestfake/safer-web-storage.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/modestfake/safer-web-storage/issues"
   },
