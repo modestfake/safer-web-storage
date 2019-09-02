@@ -27,6 +27,22 @@ class InMemoryStorage {
     return null
   }
 
+  key(index) {
+    if (index === undefined) {
+      throw new TypeError(
+        "Failed to execute 'key' on 'Storage': 1 argument required, but only 0 present."
+      )
+    }
+
+    const key = Object.keys(this._data)[index]
+
+    if (key !== undefined) {
+      return key
+    }
+
+    return null
+  }
+
   clear() {
     this._data = {}
     this.length = 0

@@ -38,6 +38,19 @@ describe('inMemoryStorage', () => {
     expect(inMemoryStorage.length).toBe(1)
   })
 
+  test('key', () => {
+    inMemoryStorage.setItem('key-1', 'value-1')
+
+    expect(() => {
+      inMemoryStorage.key()
+    }).toThrow(
+      "Failed to execute 'key' on 'Storage': 1 argument required, but only 0 present."
+    )
+
+    expect(inMemoryStorage.key(0)).toBe('key-1')
+    expect(inMemoryStorage.key(1)).toBe(null)
+  })
+
   test('clear', () => {
     inMemoryStorage.setItem('key-1', 'value-1')
     inMemoryStorage.setItem('key-2', 'value-2')
