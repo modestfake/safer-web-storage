@@ -38,6 +38,19 @@ describe('SafeStorage', () => {
     expect(safeLocalStorage.isNativeStorageUsed).toBe(true)
     expect(safeLocalStorage.isInMemoryStorageUsed).toBe(false)
     expect(safeLocalStorage._options).toMatchSnapshot()
+
+    safeLocalStorage.setItem('test-1', 423)
+    safeLocalStorage.setItem('test-2', 481)
+    expect(safeLocalStorage.getItem('test-1')).toBe('423')
+    expect(safeLocalStorage.getItem('test-3')).toBe(null)
+    expect(safeLocalStorage.key(0)).toBe('test-1')
+
+    safeLocalStorage.removeItem('test-1')
+    expect(safeLocalStorage.key(0)).toBe('test-2')
+    expect(safeLocalStorage.length).toBe(1)
+
+    safeLocalStorage.clear()
+    expect(safeLocalStorage.length).toBe(0)
   })
 
   test('Use native sessionStorage', () => {
@@ -47,6 +60,19 @@ describe('SafeStorage', () => {
     expect(SafeStorage.isNativeStorageSupported('sessionStorage')).toBe(true)
     expect(safeSessionStorage.isNativeStorageUsed).toBe(true)
     expect(safeSessionStorage.isInMemoryStorageUsed).toBe(false)
+
+    safeSessionStorage.setItem('test-1', 423)
+    safeSessionStorage.setItem('test-2', 481)
+    expect(safeSessionStorage.getItem('test-1')).toBe('423')
+    expect(safeSessionStorage.getItem('test-3')).toBe(null)
+    expect(safeSessionStorage.key(0)).toBe('test-1')
+
+    safeSessionStorage.removeItem('test-1')
+    expect(safeSessionStorage.key(0)).toBe('test-2')
+    expect(safeSessionStorage.length).toBe(1)
+
+    safeSessionStorage.clear()
+    expect(safeSessionStorage.length).toBe(0)
   })
 
   test('Pass custom error message', () => {
@@ -57,7 +83,7 @@ describe('SafeStorage', () => {
   })
 
   test('Handle AccessDenied error', () => {
-    const errorMessage =
+    const domExceptionMessage =
       'Uncaught DOMException: Failed to read the "localStorage" property from "Window": Access is denied for this document.'
 
     delete global.window
@@ -65,7 +91,7 @@ describe('SafeStorage', () => {
     global.window = new Proxy(previousWindow, {
       get(obj, prop) {
         if (['localStorage', 'sessionStorage'].includes(prop)) {
-          throw new Error(errorMessage)
+          throw new Error(domExceptionMessage)
         }
 
         if (prop in obj) {
@@ -81,11 +107,21 @@ describe('SafeStorage', () => {
     expect(safeLocalStorage.isInMemoryStorageUsed).toBe(false)
     expect(safeLocalStorage.isNativeStorageUsed).toBe(false)
     expect(SafeStorage.isNativeStorageSupported('localStorage')).toBe(false)
+    expect(console.warn).toHaveBeenLastCalledWith(
+      'Looks like you\'ve disabled "localStorage". Enable it to avoid this warning.'
+    )
 
     const safeSessionStorage = createSafeSessionStorage()
 
     expect(safeSessionStorage.isInMemoryStorageUsed).toBe(true)
     expect(safeSessionStorage.isNativeStorageUsed).toBe(false)
     expect(SafeStorage.isNativeStorageSupported('sessionStorage')).toBe(false)
+    expect(console.warn).toHaveBeenLastCalledWith(
+      'Looks like you\'ve disabled "sessionStorage". Enable it to avoid this warning.'
+    )
+
+    const errorMessage = 'Custom error message'
+    createSafeLocalStorage({ errorMessage })
+    expect(console.warn).toHaveBeenLastCalledWith(errorMessage)
   })
 })
