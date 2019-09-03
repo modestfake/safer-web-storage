@@ -1,6 +1,6 @@
 {
   "name": "safer-web-storage",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Handle all exception when storage is not available due to user's browser settings. Swap to in-memory storage if sessionStorage is not available.",
   "keywords": [
     "localStorage",
