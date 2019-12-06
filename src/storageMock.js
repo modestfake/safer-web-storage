@@ -2,6 +2,8 @@ export default function getStorage({ errorMessage }) {
   return {
     getItem() {
       console.warn(errorMessage)
+
+      return null
     },
     setItem() {
       console.warn(errorMessage)

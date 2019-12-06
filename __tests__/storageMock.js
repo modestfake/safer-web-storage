@@ -6,8 +6,9 @@ test('Storage mock', () => {
   console.warn = jest.fn()
   const storage = storageMock({ errorMessage })
 
-  storage.getItem('test')
+  const result = storage.getItem('test')
   expect(console.warn).toHaveBeenCalledWith(errorMessage)
+  expect(result).toBeNull()
 
   storage.setItem('test')
   expect(console.warn).toHaveBeenCalledWith(errorMessage)
