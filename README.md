@@ -41,6 +41,13 @@ You can pass the following properties to `options`:
 | -------------- | ------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | `errorMessage` | String | Looks like you've disabled \<StorageType\>. Enable it to avoid this warning. | Error message printed to the browser console when storage is not available |
 
+### Storage public API
+
+| Name                    | Type   | Details           |
+| ----------------------- | ------ | ----------------- |
+| `isNativeStorageUsed`   | getter | Returns `Boolean` |
+| `isInMemoryStorageUsed` | getter | Returns `Boolean` |
+
 ## Development
 
 To test the library in a browser run:
@@ -48,4 +55,14 @@ To test the library in a browser run:
 ```bash
 npm install
 npm start
+```
+
+## Publish
+
+```bash
+npm ci
+npm test
+npm run build
+npm version [patch|minor|major]
+npm publish
 ```
