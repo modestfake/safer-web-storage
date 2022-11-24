@@ -3,6 +3,7 @@
 .github
 .eslintignore
 .eslintrc.js
+.parcel-cache
 .prettierrc
 jest.config.ts
 packege-lock.json
