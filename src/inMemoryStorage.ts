@@ -1,10 +1,13 @@
-class InMemoryStorage {
+class InMemoryStorage implements Storage {
+  private _data: Record<string, string>
+  length: number
+
   constructor() {
     this._data = {}
     this.length = 0
   }
 
-  getItem(key) {
+  getItem(key: string): string | null {
     if (key in this._data) {
       return this._data[key]
     }
@@ -12,12 +15,12 @@ class InMemoryStorage {
     return null
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: string) {
     this._data[key] = value
     this.length = Object.keys(this._data).length
   }
 
-  removeItem(key) {
+  removeItem(key: string) {
     if (key in this._data) {
       delete this._data[key]
     }
@@ -27,7 +30,7 @@ class InMemoryStorage {
     return null
   }
 
-  key(index) {
+  key(index: number) {
     if (index === undefined) {
       throw new TypeError(
         "Failed to execute 'key' on 'Storage': 1 argument required, but only 0 present."

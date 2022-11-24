@@ -1,6 +1,8 @@
-import storageMock from './helpers/__mocks__/storage'
+import storageMock from '../src/storageMock'
 import { createSafeLocalStorage, createSafeSessionStorage } from '../src'
 import SafeStorage from '../src/SafeStorage'
+
+// jest.mock('./helpers/storage')
 
 const previousWindow = global.window
 
@@ -21,12 +23,12 @@ describe('SafeStorage', () => {
   test('Passed wrong storage type', () => {
     expect(() => {
       new SafeStorage()
-    }).toThrow('Please provide one of storages: sessionStorage, localStorage')
+    }).toThrow('Please provide one of storages: localStorage, sessionStorage')
 
     expect(() => {
       new SafeStorage('wrongStorage')
     }).toThrow(
-      '"wrongStorage" is not supported. use one of these storages: sessionStorage, localStorage'
+      '"wrongStorage" is not supported. use one of these storages: localStorage, sessionStorage'
     )
   })
 

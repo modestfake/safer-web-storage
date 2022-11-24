@@ -1,4 +1,9 @@
 .cache
 .coverage
-.travis.yml
+.github
+.eslintignore
+.eslintrc.js
+.prettierrc
+jest.config.ts
 packege-lock.json
+tsconfig.json

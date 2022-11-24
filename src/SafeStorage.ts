@@ -1,15 +1,27 @@
 import storageMock from './storageMock'
 import InMemoryStorage from './inMemoryStorage'
-import { getErrorMessage, storageTypes, validateStorageType } from './util'
+import { getErrorMessage, StorageType, validateStorageType } from './util'
 
-export default class SafeStorage {
-  static isNativeStorageSupported(storageType) {
+export interface Options {
+  errorMessage?: string
+}
+
+export default class SafeStorage implements Storage {
+  private _storageType: StorageType
+  private _isNativeStorageUsed: boolean
+  private _isInMemoryStorageUsed: boolean
+  private _options: {
+    errorMessage: string
+  }
+  private _storage: Storage
+
+  static isNativeStorageSupported(storageType: StorageType) {
     validateStorageType(storageType)
 
     const TEST_VALUE = 'test_value'
 
     try {
-      const key = 'safe-web-storage.support'
+      const key = 'safer-web-storage.support'
 
       window[storageType].setItem(key, TEST_VALUE)
       const value = window[storageType].getItem(key)
@@ -21,7 +33,7 @@ export default class SafeStorage {
     }
   }
 
-  constructor(storageType, options) {
+  constructor(storageType: StorageType, options: Options = {}) {
     validateStorageType(storageType)
 
     this._storageType = storageType
@@ -31,7 +43,7 @@ export default class SafeStorage {
       ...options,
     }
 
-    const isSessionStorage = storageType === storageTypes.sessionStorage
+    const isSessionStorage = storageType === 'sessionStorage'
 
     if (!SafeStorage.isNativeStorageSupported(storageType)) {
       this._storage = isSessionStorage
@@ -58,27 +70,27 @@ export default class SafeStorage {
     return Boolean(this._isInMemoryStorageUsed)
   }
 
-  getItem(key) {
+  getItem(key: string): string | null {
     return this._storage.getItem(key)
   }
 
-  setItem(key, value) {
+  setItem(key: string, value: string): void {
     return this._storage.setItem(key, value)
   }
 
-  removeItem(key) {
+  removeItem(key: string): void {
     return this._storage.removeItem(key)
   }
 
-  key(index) {
+  key(index: number): string | null {
     return this._storage.key(index)
   }
 
-  clear() {
+  clear(): void {
     return this._storage.clear()
   }
 
-  get length() {
+  get length(): number {
     return this._storage.length
   }
 }

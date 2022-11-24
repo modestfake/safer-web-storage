@@ -3,7 +3,7 @@ import storageMock from '../src/storageMock'
 const errorMessage = 'Test error message'
 
 test('Storage mock', () => {
-  console.warn = jest.fn()
+  jest.spyOn(console, 'warn')
   const storage = storageMock({ errorMessage })
 
   const result = storage.getItem('test')
@@ -21,6 +21,4 @@ test('Storage mock', () => {
 
   expect(storage.length).toBe(0)
   expect(console.warn).toHaveBeenCalledWith(errorMessage)
-
-  console.warn.mockRestore()
 })
